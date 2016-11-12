@@ -1,0 +1,33 @@
+#table-master-film_length {
+  display: none;
+}
+
+.table-hidden {
+  display: none;
+}
+
+.info-box-info {
+  display: block;
+}
+
+.info-box-judul {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#content-film {
+  margin-top: 10px;
+}
+
+.info-box {
+  cursor: pointer;
+}
+
+#box-film.selected {
+  background-color: #c3ccc7;
+}
+
+.input-inline {
+  display: inline !important;
+  width: 250px;
+}
