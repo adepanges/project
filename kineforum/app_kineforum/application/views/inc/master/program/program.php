@@ -14,6 +14,7 @@
               <option value="1">Nama Program</option>
               <option value="2">Tanggal Mulai</option>
               <option value="3">Tanggal Selesai</option>
+              <option value="4">Status</option>
             </select>
             <select id="urutkan-type" class="form-control input-md input-inline" style="width: 180px !important;">
               <option value="">Pilih</option>
@@ -46,13 +47,20 @@
         </div>
       </div>
       <div class="row" id="detail-program" style="display: none;">
-        <div class="col-sm-12">
+        <div class="col-sm-12" style="border-bottom: 1px solid #000; padding-bottom: 4px;">
           <div class="pull-right">
             <button id="btn-kembali" class="btn btn-default input-md input-inline">Kembali</button>
           </div>
         </div>
 
         <div class="col-md-6">
+          <div class="col-sm-12" style="margin-top: 5px;">
+            <div class="pull-right">
+              <button id="btn-tambah-slot" class="btn btn-default">Tambah</button>
+              <button id="btn-ubah-slot" class="btn btn-default">Ubah</button>
+              <button id="btn-hapus-slot" class="btn btn-default">Hapus</button>
+            </div>
+          </div>
           <table id="table-program-slot" class="table table-bordered">
             <thead>
                 <tr>
@@ -65,6 +73,12 @@
         </div>
 
         <div class="col-md-6">
+          <div class="col-sm-12" style="margin-top: 5px;">
+            <div class="pull-right">
+              <button id="btn-tambah-slot-film" class="btn btn-default">Tambah</button>
+              <button id="btn-hapus-slot-film" class="btn btn-default">Hapus</button>
+            </div>
+          </div>
           <table id="table-program-slot-film" class="table table-bordered">
             <thead>
                 <tr>
@@ -79,6 +93,7 @@
       </div>
 
       <?php $this->load->view('inc/master/program/modal_program') ?>
+      <?php $this->load->view('inc/master/program/modal_slot') ?>
 
       <?php $this->load->view('main-inc/jquery_validation') ?>
 
@@ -95,3 +110,4 @@
       <link rel="stylesheet" href="<?php echo $this->config->item('url_plugins') ?>datatables/css/dataTables.bootstrap.css">
 
       <script type="text/javascript" src="<?php echo $this->config->item('url_app_kineforum') ?>js/modules/master/program/program.js"></script>
+      <script type="text/javascript" src="<?php echo $this->config->item('url_app_kineforum') ?>js/modules/master/program/slot.js"></script>

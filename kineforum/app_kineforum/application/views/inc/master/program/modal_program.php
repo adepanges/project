@@ -3,7 +3,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Form Data Film</h4>
+                    <h4 class="modal-title">Form Data Program</h4>
                   </div>
                   <div class="modal-body" style="overflow-y: scroll;">
                     <form method="post" id="form-master-program" style="margin: 0px 6px 6px 6px;">
@@ -45,6 +45,27 @@
                               <textarea class="form-control input-md" name="KETERANGAN"></textarea>
                           </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <label>Status</label>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="form-group">
+                              <?php foreach ($data_status_program as $key => $value) { ?>
+                              <input type="radio" name="STATUSID" value="<?php echo $value->STATUSID ?>"> <?php echo $value->STATUS ?><br>
+                              <?php } ?>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>Warna</label>
+                        </div>
+                        <div class="col-md-8">
+                          <div class="form-group">
+                            <input type="text" class="form-control input-md" name="COLOR">
+                          </div>
+                        </div>
+
                       </div>
                     </form>
                   </div>

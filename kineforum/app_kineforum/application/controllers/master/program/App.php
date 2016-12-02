@@ -9,10 +9,11 @@ class App extends MY_Controller {
 	}
 
 	function index(){
-		$this->load->model(array('master/film/m_jenis','master/film/m_format'));
+		$this->load->model(array('master/film/m_jenis','master/film/m_format','master/program/m_status_program'));
 
 		$data = array();
 		$data['data_menu'] = $this->menu_app();
+		$data['data_status_program'] = $this->m_status_program->get()->result();
 
 		$this->template->display('inc/master/program/program',$data);
 	}
@@ -29,6 +30,7 @@ class App extends MY_Controller {
 				'TYPE' => ifunsetempty($_POST,'ORDER_TYPE',1),
 			),
 		);
+
 		$res = $this->m_program->get($params);
 
 		$data = array();
@@ -59,6 +61,8 @@ class App extends MY_Controller {
 			'PROGRAM_ID' => (int) ifunsetempty($_POST,'PROGRAM_ID',0),
 			'PROGRAM' => ifunsetempty($_POST,'PROGRAM',''),
 			'KETERANGAN' => ifunsetempty($_POST,'KETERANGAN',''),
+			'COLOR' => ifunsetempty($_POST,'COLOR',''),
+			'STATUSID' => (int) ifunsetempty($_POST,'STATUSID',''),
 			'DATE_MULAI' => date('Y-m-d',date2unix(ifunsetempty($_POST,'DATE_MULAI',''))),
 			'DATE_SELESAI' => date('Y-m-d',date2unix(ifunsetempty($_POST,'DATE_SELESAI',''))),
 		);

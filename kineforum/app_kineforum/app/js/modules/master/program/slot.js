@@ -1,32 +1,39 @@
 $(document).ready(function() {
-    jenis_film = {
+    slot = {
         launch: function() {
             // membuat modal
-            $('#btn-tambah').click(function() {
-                $('#modal-jenis-film').modal({
+            $('#btn-tambah-slot').click(function() {
+                $('#form-master-program-slot')[0].reset();
+                $('#form-master-program-slot [name=SLOT_ID]').val(0);
+                $('#form-master-program-slot [name=PROGRAM_ID]').val(program.selected.PROGRAM_ID);
+
+                $('#modal-master-program-slot').modal({
                     keyboard: false,
                     backdrop: 'static'
                 });
             });
 
+            // ubah
+            $('#btn-ubah-slot').click(function() {
+                $('#modal-master-program-slot').modal({
+                    keyboard: false,
+                    backdrop: 'static'
+                });
+
+                helper.set_form_value($('#form-master-program-slot'), slot.selected);
+            });
 
             // simpan
-            $('#btn-simpan').click(function() {
-                var url = app.data.site_url + "/master/film/jenis/simpan";
-                var form = $('#form-master-jenis-film').serializeArray();
-                // var formData = new FormData($('#form-berkas-kalender-diklat')[0]);
+            $('#btn-simpan-slot').click(function() {
+                var url = app.data.site_url + "/master/program/slot/simpan";
+                var form = $('#form-master-program-slot').serializeArray();
                 var params = helper.convert_form(form);
-                var kosong = false;
 
                 helper.body_mask();
                 $.ajax({
                         method: "POST",
                         url: url,
                         data: params,
-                        // async: false,
-                        // cache: false,
-                        // contentType: false,
-                        // processData: false,
                     })
                     .done(function(data) {
                         helper.body_unmask();
@@ -34,9 +41,9 @@ $(document).ready(function() {
                         var obj = jQuery.parseJSON(data);
 
                         if (obj.success == true) {
-                            document.getElementById("form-master-jenis-film").reset();
-                            $('#table-master-jenis-film').DataTable().ajax.reload();
-                            $('#modal-jenis-film').modal('hide');
+                            document.getElementById("form-master-program-slot").reset();
+                            $('#table-program-slot').DataTable().ajax.reload();
+                            $('#modal-master-program-slot').modal('hide');
                         } else {
                             $('#modal-notifikasi .modal-body').html(obj.msg);
                             $('#notif').modal({
@@ -47,53 +54,45 @@ $(document).ready(function() {
                     });
             });
 
-
             // hapus
-            $('#btn-hapus').click(function() {
+            $('#btn-hapus-slot').click(function() {
                 $('#modal-konfirmasi').modal({
                     keyboard: false,
                     backdrop: 'static'
                 });
+
                 $('#btn-ya').click(function() {
                     $('#btn-ya').unbind('click');
-                    var url = app.data.site_url + "/master/film/jenis/del";
+                    var url = app.data.site_url + "/master/program/slot/del";
 
                     helper.body_mask();
                     $.ajax({
                             method: "POST",
                             url: url,
                             data: {
-                                JENIS_FILM_ID: jenis_film.selected.JENIS_FILM_ID
+                                SLOT_ID: slot.selected.SLOT_ID
                             }
                         })
                         .done(function(data) {
-                            $('#table-master-jenis-film').DataTable().ajax.reload();
+                            $('#table-program-slot').DataTable().ajax.reload();
                             helper.body_unmask();
                         })
                 });
             });
 
-            // ubah
-            $('#btn-ubah').click(function() {
-                $('#modal-jenis-film').modal({
-                    keyboard: false,
-                    backdrop: 'static'
-                });
-
-                helper.set_form_value($('#form-master-jenis-film'), jenis_film.selected);
-            });
 
             var i = 1;
-            var table = $('#table-master-jenis-film').
+            var table = $('#table-program-slot').
             on('preXhr.dt', function(e, settings, data) {
-                    // data.cari = $('#cariPegawai').val();
+                    data.PROGRAM_ID = program.selected.PROGRAM_ID;
+                    slot.selected = {};
 
-                    $('#btn-hapus').attr('disabled', 'disabled');
-                    $('#btn-ubah').attr('disabled', 'disabled');
+                    $('#btn-ubah-slot').attr('disabled', 'disabled');
+                    $('#btn-hapus-slot').attr('disabled', 'disabled');
 
                     i = 1;
-                    if ($('#table-master-jenis-film').DataTable().ajax.params()) {
-                        i = $('#table-master-jenis-film').DataTable().ajax.params().start;
+                    if ($('#table-program-slot').DataTable().ajax.params()) {
+                        i = $('#table-program-slot').DataTable().ajax.params().start;
                         i++;
                     }
                 })
@@ -105,12 +104,12 @@ $(document).ready(function() {
                     processing: true,
                     serverSide: true,
                     ajax: {
-                        url: app.data.site_url + "/master/film/jenis/get",
+                        url: app.data.site_url + "/master/program/slot/get",
                         dataSrc: 'data',
                         type: 'POST'
                     },
                     columns: [{
-                        "data": "FORMAT_ID",
+                        "data": "SLOT_ID",
                         "render": function(data, type, full, meta) {
                             return i++;
                         }
@@ -122,21 +121,23 @@ $(document).ready(function() {
                 });
 
             // tambah event selected
-            $('#table-master-jenis-film tbody').on('click', 'tr', function() {
-                jenis_film.selected = table.row(this).data();
+            $('#table-program-slot tbody').on('click', 'tr', function() {
+                slot.selected = table.row(this).data();
 
-                $('#btn-hapus').removeAttr('disabled');
-                $('#btn-ubah').removeAttr('disabled');
+                $('#btn-ubah-slot').removeAttr('disabled');
+                $('#btn-hapus-slot').removeAttr('disabled');
 
-                $('#table-master-jenis-film tbody tr').removeClass('selected');
+                $('#table-program-slot tbody tr').removeClass('selected');
 
                 $(this).find('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
             });
 
+
         },
-        selected: {}
+        selected: {},
     };
 
-    jenis_film.launch();
+    // $('#content-program').html('');
+    slot.launch();
 });

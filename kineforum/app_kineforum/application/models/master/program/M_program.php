@@ -9,6 +9,7 @@ class M_program extends CI_Model {
     function get($params=array()){
         $whr = array();
         $where = 'WHERE ';
+        $whr_str = '';
         $order_by = 'ORDER BY ';
 
         $order_field = array();
@@ -18,6 +19,7 @@ class M_program extends CI_Model {
         $order_field[1] = 'P.PROGRAM';
         $order_field[2] = 'P.DATE_MULAI';
         $order_field[3] = 'P.DATE_SELESAI';
+        $order_field[4] = 'P.STATUSID';
 
 
         $order_type[1] = 'ASC';
@@ -28,7 +30,13 @@ class M_program extends CI_Model {
         }
 
         if(!empty($params['DATE_MULAI']) && !empty($params['DATE_SELESAI'])){
-            $whr[] = "(P.DATE_MULAI >= '".$params['DATE_MULAI']."' OR P.DATE_SELESAI <= '".$params['DATE_SELESAI']."')";
+            $whr_str .= '(';
+            $whr_str .= "(P.DATE_MULAI >= '".$params['DATE_MULAI']."' AND P.DATE_SELESAI <= '".$params['DATE_SELESAI']."')";
+            $whr_str .= "OR (P.DATE_MULAI >= '".$params['DATE_MULAI']."' AND P.DATE_MULAI <= '".$params['DATE_SELESAI']."')";
+            $whr_str .= "OR (P.DATE_SELESAI >= '".$params['DATE_MULAI']."' AND P.DATE_SELESAI <= '".$params['DATE_SELESAI']."')";
+            $whr_str .= ')';
+
+             $whr[] = $whr_str;
         }
 
         if(count($whr)>0){
@@ -51,7 +59,8 @@ class M_program extends CI_Model {
             P.KETERANGAN,
             P.DATE_MULAI,
             P.DATE_SELESAI,
-            P.STATUS,
+            P.STATUSID,
+            P.COLOR,
             TS.TOTAL_SLOT
 
             FROM DATA_PROGRAM P
