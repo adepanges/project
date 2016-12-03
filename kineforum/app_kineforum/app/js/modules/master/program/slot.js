@@ -89,6 +89,11 @@ $(document).ready(function() {
 
                     $('#btn-ubah-slot').attr('disabled', 'disabled');
                     $('#btn-hapus-slot').attr('disabled', 'disabled');
+                    $('#btn-tambah-slot-film').attr('disabled', 'disabled');
+
+                    if(settings.iDraw>1){
+                        $('#table-program-slot-film').DataTable().clear().draw();
+                    }
 
                     i = 1;
                     if ($('#table-program-slot').DataTable().ajax.params()) {
@@ -126,11 +131,14 @@ $(document).ready(function() {
 
                 $('#btn-ubah-slot').removeAttr('disabled');
                 $('#btn-hapus-slot').removeAttr('disabled');
+                $('#btn-tambah-slot-film').removeAttr('disabled');
 
                 $('#table-program-slot tbody tr').removeClass('selected');
 
                 $(this).find('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
+
+                $('#table-program-slot-film').DataTable().ajax.reload();
             });
 
 

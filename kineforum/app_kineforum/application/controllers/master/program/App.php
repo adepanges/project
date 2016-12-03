@@ -10,10 +10,11 @@ class App extends MY_Controller {
 
 	function index(){
 		$this->load->model(array('master/film/m_jenis','master/film/m_format','master/program/m_status_program'));
-
 		$data = array();
 		$data['data_menu'] = $this->menu_app();
 		$data['data_status_program'] = $this->m_status_program->get()->result();
+		$data['data_jenis_film'] = $this->m_jenis->get()->result();
+		$data['data_format'] = $this->m_format->get()->result();
 
 		$this->template->display('inc/master/program/program',$data);
 	}

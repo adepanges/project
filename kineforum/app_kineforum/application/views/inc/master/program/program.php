@@ -94,6 +94,7 @@
 
       <?php $this->load->view('inc/master/program/modal_program') ?>
       <?php $this->load->view('inc/master/program/modal_slot') ?>
+      <?php $this->load->view('inc/master/program/modal_film') ?>
 
       <?php $this->load->view('main-inc/jquery_validation') ?>
 
@@ -111,3 +112,4 @@
 
       <script type="text/javascript" src="<?php echo $this->config->item('url_app_kineforum') ?>js/modules/master/program/program.js"></script>
       <script type="text/javascript" src="<?php echo $this->config->item('url_app_kineforum') ?>js/modules/master/program/slot.js"></script>
+      <script type="text/javascript" src="<?php echo $this->config->item('url_app_kineforum') ?>js/modules/master/program/slot_film.js"></script>
